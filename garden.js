@@ -49,8 +49,6 @@ function iWouldLikeToAbsolutelyPositionThisImagePlease(id) {
 
 }
 
-// x is the column number
-// y is the row number
 function getCellByCoordinates(x, y) {
     return "cell" + "_" + str(x) + "_" + str(y);
 }
@@ -59,13 +57,15 @@ function getImageByCoordinates(x, y) {
     return "img" + "_" + str(x) + "_" + str(y);
 }
 
+/**
+ * Add seedling image to the cell.
+ * @param {string} seedlingIndex - 1, 2, 3 or 4.
+ */
 function plantSeedling() {
+    // read seedling index: for now, make it one
+    var seedlingIndex = 4;
     var cellId = this.id;
-    addImageToCellWithId(cellId);
-}
-
-function addImageToCellWithId(cellId) {
     img = document.getElementById(cellId).firstChild.firstChild;
-    img.className = "seedling";
+    img.className = "seedling" + seedlingIndex;
     img.className += " " + "plant";
 }
