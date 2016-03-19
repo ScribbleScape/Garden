@@ -1,0 +1,18 @@
+#menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.menuCell {
+    background-color: #73554C;
+    padding: 5px;
+    border-width: 5px;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.menuCell.selected {
+    border-color: #000000;
+}

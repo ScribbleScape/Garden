@@ -1,6 +1,58 @@
+
 window.onload = function() {
-  createTable();
+    generateMenuTable();
+    createTable();
 };
+
+var seedlingNumber = "1";
+
+function generateMenuTable() {
+    var menuTable = document.getElementById("menuTable");
+    var numberOfSeedlings = 4;
+    var rowWidth = 2;
+    var rowCounter = 0;
+    var row = document.createElement("tr");
+    menuTable.appendChild(row);
+
+    for (var i=1; i<=4; i++) {
+        var button = document.createElement("td");
+        row.appendChild(button);
+        button.className = "menuCell";
+        button.id = "menuCell_" + i;
+        if (i == 1) {
+            button.className += " selected";
+        }
+        button.onclick = selectImage;
+        var img = document.createElement("img");
+        button.appendChild(img);
+        img.className = "seedling" + i;
+        console.log(img.className);
+        rowCounter++;
+        // create button for each seedling
+        if (rowCounter >= rowWidth) {
+            row = document.createElement("tr");
+            menuTable.appendChild(row);
+            rowCounter = 0;
+        }
+    }
+}
+
+function selectImage() {
+    var cellId = this.id;
+    img = document.getElementById(cellId).firstChild;
+    var seedlingIndex = img.className.replace("seedling", "");
+    seedlingNumber = seedlingIndex;
+
+    // add border to selected button
+    for (var i=1; i<=4; i++) {
+        var img = document.getElementById("menuCell_" + i);
+        img.className = "menuCell";
+
+        if (i == seedlingIndex) {
+            img.className += " selected";
+        }
+    }
+}
 
 function createTable() {
     var cellWidth = 100;
@@ -63,7 +115,7 @@ function getImageByCoordinates(x, y) {
  */
 function plantSeedling() {
     // read seedling index: for now, make it one
-    var seedlingIndex = 4;
+    var seedlingIndex = seedlingNumber;
     var cellId = this.id;
     img = document.getElementById(cellId).firstChild.firstChild;
     img.className = "seedling" + seedlingIndex;
