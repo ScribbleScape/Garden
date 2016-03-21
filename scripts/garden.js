@@ -1,20 +1,25 @@
+// garden.js
 
 window.onload = function() {
     generateMenuTable();
     createTable();
 };
 
-var seedlingNumber = "1";
+var species = new Species(4);
 
 function generateMenuTable() {
+
     var menuTable = document.getElementById("menuTable");
     var numberOfSeedlings = 4;
     var rowWidth = 2;
     var rowCounter = 0;
     var row = document.createElement("tr");
+    var plants = species.getPlants();
+    var plantsLength = plants.length;
+
     menuTable.appendChild(row);
 
-    for (var i=1; i<=4; i++) {
+    for (var i=0; i<plantsLength; i++) {
         var button = document.createElement("td");
         row.appendChild(button);
         button.className = "menuCell";
@@ -25,8 +30,7 @@ function generateMenuTable() {
         button.onclick = selectImage;
         var img = document.createElement("img");
         button.appendChild(img);
-        img.className = "seedling" + i;
-        console.log(img.className);
+        img.className = plants[i].getClassName();
         rowCounter++;
         // create button for each seedling
         if (rowCounter >= rowWidth) {
@@ -40,15 +44,16 @@ function generateMenuTable() {
 function selectImage() {
     var cellId = this.id;
     img = document.getElementById(cellId).firstChild;
-    var seedlingIndex = img.className.replace("seedling", "");
-    seedlingNumber = seedlingIndex;
+    species.setCurrentSpecies(img.className);
+    plants = species.getPlants();
+    var plantLength = plants.length;
 
     // add border to selected button
-    for (var i=1; i<=4; i++) {
+    for (var i=0; i<plantLength; i++) {
         var img = document.getElementById("menuCell_" + i);
         img.className = "menuCell";
 
-        if (i == seedlingIndex) {
+        if (plants[i].getClassName() == species.getCurrentSpecies()) {
             img.className += " selected";
         }
     }
@@ -114,10 +119,9 @@ function getImageByCoordinates(x, y) {
  * @param {string} seedlingIndex - 1, 2, 3 or 4.
  */
 function plantSeedling() {
-    // read seedling index: for now, make it one
-    var seedlingIndex = seedlingNumber;
     var cellId = this.id;
     img = document.getElementById(cellId).firstChild.firstChild;
-    img.className = "seedling" + seedlingIndex;
-    img.className += " " + "plant";
+
+    img.className = species.getCurrentSpecies();
+    img.className += " plant";
 }
