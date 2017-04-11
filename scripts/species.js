@@ -27,6 +27,6 @@ function Species(numberOfSpecies) {
     };
 
     this._getIndexFromClassName = function(className) {
-        return className.replace("seedling", "");
+        return plants[0].getIndex();
     };
 }
